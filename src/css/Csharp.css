@@ -1,0 +1,33 @@
+.project-card {
+  background: #0f1c33;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.project-features,
+.project-tech,
+.project-links {
+  background: #0f1c33;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 25px;
+}
+
+.project-features p {
+  margin-bottom: 10px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  background: #2563eb;
+}
