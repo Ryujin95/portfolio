@@ -301,10 +301,10 @@ export default function MiniJeu2() {
             stop
           </button>
         </div>
-
+      <div className="runner-info">
         <div className="runner-score">Score : {score}</div>
         <div className="runner-time">Temps : {time}s</div>
-
+      </div>
         <div className="runner-game">
           <div
             id="player"

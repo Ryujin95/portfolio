@@ -30,6 +30,12 @@
   background: #dc2626;
 }
 
+.runner-info {
+    display:flex;
+    margin-bottom: 20px;
+    gap: 780px;
+}
+
 .runner-score {
   margin-bottom: 16px;
   font-size: 22px;

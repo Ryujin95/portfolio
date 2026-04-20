@@ -3,9 +3,22 @@
 }
 .game_info{
     display:flex;
-    justify-content: space-between;
     margin-bottom: 20px;
+    gap: 780px;
 }
+
+.score {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f8fafc;
+}
+
+.time {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f8fafc;
+}
+
 .container{
     width: 1000px;
     height: 500px;
