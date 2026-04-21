@@ -1,8 +1,10 @@
 main {
-  max-width: 1200px;
-  margin: 0 auto;
+  margin-left: 260px;
+  width: calc(100% - 260px);
+  max-width: none;
   padding: 50px 24px 80px;
   color: #f8fafc;
+  box-sizing: border-box;
 }
 
 .section {
@@ -23,6 +25,14 @@ main {
   line-height: 1.7;
   color: #94a3b8;
   max-width: 800px;
+}
+
+@media (max-width: 900px) {
+  main {
+    margin-left: 0;
+    width: 100%;
+    padding: 32px 16px 60px;
+  }
 }
 
 @media (max-width: 600px) {
