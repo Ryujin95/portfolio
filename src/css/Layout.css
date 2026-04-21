@@ -1,7 +1,6 @@
 main {
-  margin-left: 260px;
-  width: calc(100% - 260px);
-  max-width: none;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 50px 24px 80px;
   color: #f8fafc;
   box-sizing: border-box;
@@ -25,6 +24,15 @@ main {
   line-height: 1.7;
   color: #94a3b8;
   max-width: 800px;
+}
+
+@media (max-width: 1700px) {
+  main {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    max-width: none;
+    padding: 50px 24px 80px;
+  }
 }
 
 @media (max-width: 900px) {
