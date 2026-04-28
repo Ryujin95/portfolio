@@ -24,6 +24,8 @@ const OBSTACLE_TICK_MS = 20;
 const SPAWN_MS = 2000;
 const GAME_DURATION = 60;
 
+const techBadges = ["CSS", "JavaScript", "React"];
+
 export default function MiniJeu2() {
   const [score, setScore] = useState(0);
   const [time, setTime] = useState(GAME_DURATION);
@@ -209,7 +211,10 @@ export default function MiniJeu2() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
+      if (
+        isRunning &&
+        ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)
+      ) {
         event.preventDefault();
       }
 
@@ -284,10 +289,17 @@ export default function MiniJeu2() {
   return (
     <main>
       <section>
-        <h1>Mini Jeu 2</h1>
+        <h1>Runner</h1>
+
+        <div className="tech-badges">
+          {techBadges.map((tech) => (
+            <span key={tech} className="badge">{tech}</span>
+          ))}
+        </div>
+
         <p>
           Runner 2D adapté en React pour travailler les déplacements, le saut,
-          l’accroupissement, les collisions et la logique temps réel.
+          l'accroupissement, les collisions et la logique temps réel.
         </p>
       </section>
 
@@ -301,10 +313,12 @@ export default function MiniJeu2() {
             stop
           </button>
         </div>
-      <div className="runner-info">
-        <div className="runner-score">Score : {score}</div>
-        <div className="runner-time">Temps : {time}s</div>
-      </div>
+
+        <div className="runner-info">
+          <div className="runner-score">Score : {score}</div>
+          <div className="runner-time">Temps : {time}s</div>
+        </div>
+
         <div className="runner-game">
           <div
             id="player"
@@ -326,9 +340,7 @@ export default function MiniJeu2() {
                 left: `${obstacle.x}px`,
                 width: `${OBSTACLE_WIDTH}px`,
                 height: `${OBSTACLE_HEIGHT}px`,
-                bottom: `${
-                  obstacle.isHigh ? HIGH_OBSTACLE_BOTTOM : LOW_OBSTACLE_BOTTOM
-                }px`,
+                bottom: `${obstacle.isHigh ? HIGH_OBSTACLE_BOTTOM : LOW_OBSTACLE_BOTTOM}px`,
               }}
             />
           ))}

@@ -1,6 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import "../css/MiniJeu1.css";
 
+const GAME_DURATION = 60;
+const SPAWN_EVERY_MS = 800;
+const TARGET_LIFETIME_MS = 1000;
+const TARGET_SIZE = 50;
+const CONTAINER_WIDTH = 1000;
+const CONTAINER_HEIGHT = 500;
+
+const techBadges = ["CSS", "JavaScript", "React"];
+
 export default function MiniJeu1() {
   const [score, setScore] = useState(0);
   const [time, setTime] = useState(0);
@@ -10,13 +19,6 @@ export default function MiniJeu1() {
   const spawnIntervalRef = useRef(null);
   const gameIntervalRef = useRef(null);
   const targetIdRef = useRef(0);
-
-  const GAME_DURATION = 60;
-  const SPAWN_EVERY_MS = 800;
-  const TARGET_LIFETIME_MS = 1000;
-  const TARGET_SIZE = 50;
-  const CONTAINER_WIDTH = 1000;
-  const CONTAINER_HEIGHT = 500;
 
   const clearAllIntervals = () => {
     if (spawnIntervalRef.current) {
@@ -39,23 +41,17 @@ export default function MiniJeu1() {
     const top = Math.random() * (CONTAINER_HEIGHT - TARGET_SIZE);
     const left = Math.random() * (CONTAINER_WIDTH - TARGET_SIZE);
 
-    const newTarget = {
-      id,
-      top,
-      left,
-    };
-
-    setTargets((prev) => [...prev, newTarget]);
+    setTargets((prev) => [...prev, { id, top, left }]);
 
     window.setTimeout(() => {
       removeTarget(id);
     }, TARGET_LIFETIME_MS);
   };
 
-const stopGame = () => {
-  clearAllIntervals();
-  setIsRunning(false);
-};
+  const stopGame = () => {
+    clearAllIntervals();
+    setIsRunning(false);
+  };
 
   const startGame = () => {
     clearAllIntervals();
@@ -97,6 +93,13 @@ const stopGame = () => {
     <main>
       <section>
         <h1>FPS</h1>
+
+        <div className="tech-badges">
+          {techBadges.map((tech) => (
+            <span key={tech} className="badge">{tech}</span>
+          ))}
+        </div>
+
         <p className="intro">
           Mini-jeu réalisé en JavaScript puis adapté en React pour travailler la
           logique interactive, la gestion du temps et les événements utilisateur.
@@ -105,15 +108,15 @@ const stopGame = () => {
 
       <section>
         <div className="game">
-<div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
-  <button className="start_but" onClick={startGame} type="button">
-    start / restart
-  </button>
+          <div className="game-buttons">
+            <button className="start_but" onClick={startGame} type="button">
+              start / restart
+            </button>
 
-  <button className="stop_but" onClick={stopGame} type="button">
-    stop
-  </button>
-</div>
+            <button className="stop_but" onClick={stopGame} type="button">
+              stop
+            </button>
+          </div>
 
           <div className="game_info">
             <span className="score">score : {score}</span>

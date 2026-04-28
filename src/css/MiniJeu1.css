@@ -19,6 +19,12 @@
     color: #f8fafc;
 }
 
+.game-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
 .container{
     width: 1000px;
     height: 500px;
