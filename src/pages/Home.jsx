@@ -96,7 +96,7 @@ export default function Home() {
           </Link>
 
           <Link to="/istanbulGrill" className="project-card">
-            <h3>Site restaurant</h3>
+            <h3>Istanbul Grill</h3>
             <p>
               Site réalisé pour un besoin concret, avec attention portée au
               design, à la navigation et à l’expérience utilisateur.
@@ -105,7 +105,7 @@ export default function Home() {
           </Link>
 
           <Link to="/mini-jeu-1" className="project-card">
-            <h3>Mini jeu 1</h3>
+            <h3>FPS</h3>
             <p>
               Projet JavaScript mettant en avant la logique, les interactions
               utilisateur et la gestion des événements.
@@ -114,7 +114,7 @@ export default function Home() {
           </Link>
 
           <Link to="/mini-jeu-2" className="project-card">
-            <h3>Mini jeu 2</h3>
+            <h3>Runner</h3>
             <p>
               Deuxième projet orienté dynamique côté client, règles de jeu et
               comportement interactif.

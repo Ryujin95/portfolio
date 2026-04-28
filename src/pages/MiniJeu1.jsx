@@ -96,7 +96,7 @@ const stopGame = () => {
   return (
     <main>
       <section>
-        <h1>Mini Jeu 1</h1>
+        <h1>FPS</h1>
         <p className="intro">
           Mini-jeu réalisé en JavaScript puis adapté en React pour travailler la
           logique interactive, la gestion du temps et les événements utilisateur.
