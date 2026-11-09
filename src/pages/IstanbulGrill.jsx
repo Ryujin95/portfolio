@@ -40,7 +40,7 @@ export default function IstanbulGrill() {
 
         <div className="project-links">
           
-            <a href="https://istanbul-grill.vercel.app/"
+            <a href="https://www.istanbulgrill-cergy.com/"
             target="_blank"
             rel="noreferrer"
             className="project-link-button"

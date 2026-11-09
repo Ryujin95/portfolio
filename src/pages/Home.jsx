@@ -87,7 +87,7 @@ export default function Home() {
 
         <div className="projects-grid">
           <Link to="/jdr" className="project-card">
-            <h3>Application JDR</h3>
+            <h3>StoryForge</h3>
             <p>
               Application complète développée avec React et Symfony, incluant
               gestion des rôles, logique métier, API REST et structure modulaire.
