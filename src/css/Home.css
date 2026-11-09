@@ -158,3 +158,9 @@
     font-size: 34px;
   }
 }
+.project-card .experience-meta {
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: #93c5fd;
+}

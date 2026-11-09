@@ -76,62 +76,70 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section" id="projects">
-        <div className="section-heading">
-          <h2>Mes projets</h2>
-          <p>
-            Chaque projet montre une facette différente de mon niveau technique
-            et de ma manière de construire une application.
-          </p>
-        </div>
+      <div id="projects">
+        <section className="section" aria-labelledby="professional-experiences-title">
+          <div className="section-heading">
+            <h2 id="professional-experiences-title">Expériences professionnelles</h2>
+          </div>
 
-        <div className="projects-grid">
-          <Link to="/jdr" className="project-card">
-            <h3>StoryForge</h3>
-            <p>
-              Application complète développée avec React et Symfony, incluant
-              gestion des rôles, logique métier, API REST et structure modulaire.
-            </p>
-            <span>Voir le projet</span>
-          </Link>
+          <div className="projects-grid">
+            <Link to="/istanbulGrill" className="project-card">
+              <h3>Istanbul Grill</h3>
+              <p className="experience-meta">Développeur Web Freelance — septembre 2025</p>
+              <p>
+                Développement d’un site web responsive avec React, intégration des
+                données via API et filtrage dynamique des contenus.
+              </p>
+              <span>Voir le projet</span>
+            </Link>
 
-          <Link to="/istanbulGrill" className="project-card">
-            <h3>Istanbul Grill</h3>
-            <p>
-              Site réalisé pour un besoin concret, avec attention portée au
-              design, à la navigation et à l’expérience utilisateur.
-            </p>
-            <span>Voir le projet</span>
-          </Link>
+            <Link to="/csharp" className="project-card">
+              <h3>AKIRA</h3>
+              <p className="experience-meta">Développeur d’applications — mars à juin 2025</p>
+              <p>
+                Développement d’une application interne de gestion funéraire avec C#,
+                .NET, Blazor et Telerik, fonctionnalités CRUD et intégration d’API REST.
+              </p>
+              <span>Voir le projet</span>
+            </Link>
+          </div>
+        </section>
 
-          <Link to="/mini-jeu-1" className="project-card">
-            <h3>FPS</h3>
-            <p>
-              Projet JavaScript mettant en avant la logique, les interactions
-              utilisateur et la gestion des événements.
-            </p>
-            <span>Voir le projet</span>
-          </Link>
+        <section className="section" aria-labelledby="personal-projects-title">
+          <div className="section-heading">
+            <h2 id="personal-projects-title">Projets personnels</h2>
+          </div>
 
-          <Link to="/mini-jeu-2" className="project-card">
-            <h3>Runner</h3>
-            <p>
-              Deuxième projet orienté dynamique côté client, règles de jeu et
-              comportement interactif.
-            </p>
-            <span>Voir le projet</span>
-          </Link>
+          <div className="projects-grid">
+            <Link to="/jdr" className="project-card">
+              <h3>StoryForge</h3>
+              <p>
+                Plateforme de jeu de rôle développée avec React, Symfony et MySQL,
+                incluant gestion des rôles, logique métier, API REST et structure modulaire.
+              </p>
+              <span>Voir le projet</span>
+            </Link>
 
-          <Link to="/csharp" className="project-card">
-            <h3>Projet C# (stage)</h3>
-            <p>
-              Expérience réalisée en contexte professionnel, présentée sans code
-              public mais avec description du travail effectué.
-            </p>
-            <span>Voir le projet</span>
-          </Link>
-        </div>
-      </section>
+            <Link to="/mini-jeu-1" className="project-card">
+              <h3>Mini-jeu FPS</h3>
+              <p>
+                Projet personnel interactif en JavaScript mettant en avant la logique,
+                les interactions utilisateur et la gestion des événements.
+              </p>
+              <span>Voir le projet</span>
+            </Link>
+
+            <Link to="/mini-jeu-2" className="project-card">
+              <h3>Mini-jeu Runner</h3>
+              <p>
+                Projet personnel interactif orienté dynamique côté client, règles de jeu
+                et comportement interactif.
+              </p>
+              <span>Voir le projet</span>
+            </Link>
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
