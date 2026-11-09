@@ -1,32 +1,29 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import useLanguage from "../i18n/useLanguage.js";
 import "../css/MiniJeu2.css";
 
 const GAME_WIDTH = 1000;
 const GROUND_Y = 50;
 const PLAYER_LEFT_START = 80;
 const PLAYER_MOVE_STEP = 50;
-
 const PLAYER_WIDTH = 90;
 const PLAYER_HEIGHT = 90;
 const PLAYER_CROUCH_HEIGHT = 60;
-
 const JUMP_HEIGHT = 170;
 const JUMP_UP_MS = 300;
 const JUMP_DOWN_MS = 400;
-
 const OBSTACLE_WIDTH = 50;
 const OBSTACLE_HEIGHT = 90;
 const HIGH_OBSTACLE_BOTTOM = 120;
 const LOW_OBSTACLE_BOTTOM = 50;
-
 const OBSTACLE_SPEED = 5;
 const OBSTACLE_TICK_MS = 20;
 const SPAWN_MS = 2000;
 const GAME_DURATION = 60;
-
 const techBadges = ["CSS", "JavaScript", "React"];
 
 export default function MiniJeu2() {
+  const { t } = useLanguage();
   const [score, setScore] = useState(0);
   const [time, setTime] = useState(GAME_DURATION);
   const [isJumping, setIsJumping] = useState(false);
@@ -42,29 +39,16 @@ export default function MiniJeu2() {
   const moveIntervalRef = useRef(null);
   const timerRef = useRef(null);
   const jumpTimeoutsRef = useRef([]);
-
   const playerBottomRef = useRef(GROUND_Y);
   const playerLeftRef = useRef(PLAYER_LEFT_START);
   const isCrouchingRef = useRef(false);
   const isJumpingRef = useRef(false);
-
   const playerHeight = isCrouching ? PLAYER_CROUCH_HEIGHT : PLAYER_HEIGHT;
 
-  useEffect(() => {
-    playerBottomRef.current = playerBottom;
-  }, [playerBottom]);
-
-  useEffect(() => {
-    playerLeftRef.current = playerLeft;
-  }, [playerLeft]);
-
-  useEffect(() => {
-    isCrouchingRef.current = isCrouching;
-  }, [isCrouching]);
-
-  useEffect(() => {
-    isJumpingRef.current = isJumping;
-  }, [isJumping]);
+  useEffect(() => { playerBottomRef.current = playerBottom; }, [playerBottom]);
+  useEffect(() => { playerLeftRef.current = playerLeft; }, [playerLeft]);
+  useEffect(() => { isCrouchingRef.current = isCrouching; }, [isCrouching]);
+  useEffect(() => { isJumpingRef.current = isJumping; }, [isJumping]);
 
   const playerGif = useMemo(() => {
     if (isJumping) return "jump.gif";
@@ -77,17 +61,14 @@ export default function MiniJeu2() {
       clearInterval(spawnIntervalRef.current);
       spawnIntervalRef.current = null;
     }
-
     if (moveIntervalRef.current) {
       clearInterval(moveIntervalRef.current);
       moveIntervalRef.current = null;
     }
-
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
-
     jumpTimeoutsRef.current.forEach((id) => clearTimeout(id));
     jumpTimeoutsRef.current = [];
   };
@@ -109,7 +90,6 @@ export default function MiniJeu2() {
     setIsGameOver(false);
     setIsRunning(false);
     obstacleIdRef.current = 0;
-
     playerBottomRef.current = GROUND_Y;
     playerLeftRef.current = PLAYER_LEFT_START;
     isCrouchingRef.current = false;
@@ -135,11 +115,7 @@ export default function MiniJeu2() {
     spawnIntervalRef.current = window.setInterval(() => {
       setObstacles((prev) => [
         ...prev,
-        {
-          id: obstacleIdRef.current++,
-          x: GAME_WIDTH,
-          isHigh: Math.random() > 0.5,
-        },
+        { id: obstacleIdRef.current++, x: GAME_WIDTH, isHigh: Math.random() > 0.5 },
       ]);
     }, SPAWN_MS);
 
@@ -147,42 +123,29 @@ export default function MiniJeu2() {
       setObstacles((prev) => {
         let scoredCount = 0;
         let collided = false;
-
         const currentPlayerLeft = playerLeftRef.current;
         const currentPlayerBottom = playerBottomRef.current;
-        const currentPlayerHeight = isCrouchingRef.current
-          ? PLAYER_CROUCH_HEIGHT
-          : PLAYER_HEIGHT;
+        const currentPlayerHeight = isCrouchingRef.current ? PLAYER_CROUCH_HEIGHT : PLAYER_HEIGHT;
 
         const nextObstacles = prev
           .map((obstacle) => {
             const nextX = obstacle.x - OBSTACLE_SPEED;
-
             const playerHitLeft = currentPlayerLeft + 24;
             const playerHitRight = currentPlayerLeft + PLAYER_WIDTH - 24;
             const playerHitBottom = currentPlayerBottom + 10;
             const playerHitTop = currentPlayerBottom + currentPlayerHeight - 10;
-
-            const obstacleBottom = obstacle.isHigh
-              ? HIGH_OBSTACLE_BOTTOM
-              : LOW_OBSTACLE_BOTTOM;
+            const obstacleBottom = obstacle.isHigh ? HIGH_OBSTACLE_BOTTOM : LOW_OBSTACLE_BOTTOM;
             const obstacleTop = obstacleBottom + OBSTACLE_HEIGHT;
-
             const obstacleHitLeft = nextX + 8;
             const obstacleHitRight = nextX + OBSTACLE_WIDTH - 8;
             const obstacleHitBottom = obstacleBottom + 6;
             const obstacleHitTop = obstacleTop - 6;
-
             const isColliding =
               playerHitRight > obstacleHitLeft &&
               playerHitLeft < obstacleHitRight &&
               playerHitTop > obstacleHitBottom &&
               playerHitBottom < obstacleHitTop;
-
-            if (isColliding) {
-              collided = true;
-            }
-
+            if (isColliding) collided = true;
             return { ...obstacle, x: nextX };
           })
           .filter((obstacle) => {
@@ -193,17 +156,13 @@ export default function MiniJeu2() {
             return true;
           });
 
-        if (scoredCount > 0) {
-          setScore((prevScore) => prevScore + scoredCount);
-        }
-
+        if (scoredCount > 0) setScore((prevScore) => prevScore + scoredCount);
         if (collided) {
           clearAllTimers();
           setIsRunning(false);
           setIsGameOver(true);
           return prev;
         }
-
         return nextObstacles;
       });
     }, OBSTACLE_TICK_MS);
@@ -211,34 +170,25 @@ export default function MiniJeu2() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (
-        isRunning &&
-        ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)
-      ) {
+      if (isRunning && ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
         event.preventDefault();
       }
-
       if (!isRunning || isGameOver) return;
 
       if (event.key === "ArrowUp" && !isJumpingRef.current) {
         setIsJumping(true);
         isJumpingRef.current = true;
-
         setPlayerBottom(JUMP_HEIGHT);
         playerBottomRef.current = JUMP_HEIGHT;
-
         const upTimeout = window.setTimeout(() => {
           setPlayerBottom(GROUND_Y);
           playerBottomRef.current = GROUND_Y;
-
           const downTimeout = window.setTimeout(() => {
             setIsJumping(false);
             isJumpingRef.current = false;
           }, JUMP_DOWN_MS);
-
           jumpTimeoutsRef.current.push(downTimeout);
         }, JUMP_UP_MS);
-
         jumpTimeoutsRef.current.push(upTimeout);
       }
 
@@ -246,7 +196,6 @@ export default function MiniJeu2() {
         setIsCrouching(true);
         isCrouchingRef.current = true;
       }
-
       if (event.key === "ArrowRight") {
         setPlayerLeft((prev) => {
           const next = Math.min(prev + PLAYER_MOVE_STEP, GAME_WIDTH - PLAYER_WIDTH);
@@ -254,7 +203,6 @@ export default function MiniJeu2() {
           return next;
         });
       }
-
       if (event.key === "ArrowLeft") {
         setPlayerLeft((prev) => {
           const next = Math.max(prev - PLAYER_MOVE_STEP, 0);
@@ -273,50 +221,38 @@ export default function MiniJeu2() {
 
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
   }, [isRunning, isGameOver]);
 
-  useEffect(() => {
-    return () => {
-      clearAllTimers();
-    };
-  }, []);
+  useEffect(() => () => clearAllTimers(), []);
 
   return (
     <main>
       <section>
-        <h1>Runner</h1>
-
+        <h1>{t("runner.title")}</h1>
         <div className="tech-badges">
-          {techBadges.map((tech) => (
-            <span key={tech} className="badge">{tech}</span>
-          ))}
+          {techBadges.map((tech) => <span key={tech} className="badge">{tech}</span>)}
         </div>
-
-        <p>
-          Runner 2D adapté en React pour travailler les déplacements, le saut,
-          l'accroupissement, les collisions et la logique temps réel.
-        </p>
+        <p>{t("runner.intro")}</p>
+        <p>{t("runner.instructions")}</p>
       </section>
 
       <section>
         <div className="runner-actions">
           <button className="start_but" onClick={startGame} type="button">
-            start / restart
+            {t("runner.start")}
           </button>
-
           <button className="stop_but" onClick={stopGame} type="button">
-            stop
+            {t("runner.stop")}
           </button>
         </div>
 
         <div className="runner-info">
-          <div className="runner-score">Score : {score}</div>
-          <div className="runner-time">Temps : {time}s</div>
+          <div className="runner-score">{t("runner.score", { score })}</div>
+          <div className="runner-time">{t("runner.time", { seconds: time })}</div>
         </div>
 
         <div className="runner-game">
@@ -329,7 +265,7 @@ export default function MiniJeu2() {
               height: `${playerHeight}px`,
             }}
           >
-            <img src={playerGif} alt="joueur" />
+            <img src={playerGif} alt={t("runner.playerAlt")} />
           </div>
 
           {obstacles.map((obstacle) => (
@@ -348,10 +284,10 @@ export default function MiniJeu2() {
           {isGameOver && (
             <div className="runner-overlay">
               <div className="runner-overlay-box">
-                <h2>{time === 0 ? "Temps écoulé" : "Game Over"}</h2>
-                <p>Score : {score}</p>
+                <h2>{time === 0 ? t("runner.timeUp") : t("runner.gameOver")}</h2>
+                <p>{t("runner.score", { score })}</p>
                 <button className="start_but" onClick={startGame} type="button">
-                  recommencer
+                  {t("runner.restart")}
                 </button>
               </div>
             </div>
