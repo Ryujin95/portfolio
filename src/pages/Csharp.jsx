@@ -1,88 +1,60 @@
+import useLanguage from "../i18n/useLanguage.js";
 import "../css/Csharp.css";
 
 const techBadges = ["C#", "ASP.NET Core", "Razor", "PostgreSQL", "SignalR", "Telerik", "Docker", "Entity Framework"];
+const featureKeys = [
+  "feature1",
+  "feature2",
+  "feature3",
+  "feature4",
+  "feature5",
+  "feature6",
+  "feature7",
+];
 
 export default function ProjetCSharp() {
+  const { t } = useLanguage();
+
   return (
     <main>
       <section>
-        <h1>Application de gestion de contenus</h1>
-
+        <h1>{t("csharp.title")}</h1>
         <div className="tech-badges">
-          {techBadges.map((tech) => (
-            <span key={tech} className="badge">{tech}</span>
-          ))}
+          {techBadges.map((tech) => <span key={tech} className="badge">{tech}</span>)}
         </div>
-
         <div className="about-box">
-          <p>
-            Projet réalisé en stage chez Akira, une entreprise spécialisée dans
-            la conception de logiciels professionnels. L'application est destinée
-            aux entreprises de pompes funèbres et permet de centraliser toutes
-            les informations utiles à leur activité.
-          </p>
-
-          <p>
-            C# était un langage que je ne connaissais pas avant ce stage. J'ai
-            dû m'adapter rapidement à l'environnement de l'entreprise, apprendre
-            la technologie en autonomie et livrer une fonctionnalité complète
-            dans le délai imparti.
-          </p>
-
-          <p>
-            On m'a confié la création d'un système permettant de gérer des
-            répertoires, des pages et des topics (contenus textuels enrichis),
-            avec une interface dynamique, un chargement progressif des données
-            et une synchronisation en temps réel via SignalR.
-          </p>
+          {[1, 2, 3].map((paragraph) => (
+            <p key={paragraph}>{t(`csharp.intro${paragraph}`)}</p>
+          ))}
         </div>
       </section>
 
       <section>
-        <h2>Fonctionnalités développées</h2>
-
+        <h2>{t("csharp.featuresTitle")}</h2>
         <ul className="project-features">
-          <li>Gestion complète CRUD des répertoires, pages et topics</li>
-          <li>Chargement progressif et système de cache local pour les topics</li>
-          <li>Navigation par onglets avec Telerik TabStrip</li>
-          <li>Recherche par mot-clé avec affichage du chemin complet (Répertoire / Page / Topic)</li>
-          <li>Synchronisation en temps réel via SignalR</li>
-          <li>Gestion des rôles : certaines actions réservées aux modérateurs</li>
-          <li>Formulaires dynamiques avec ObjectProxy et éditeur de texte enrichi</li>
+          {featureKeys.map((feature) => <li key={feature}>{t(`csharp.${feature}`)}</li>)}
         </ul>
       </section>
 
       <section>
-        <h2>Architecture technique</h2>
-
+        <h2>{t("csharp.architectureTitle")}</h2>
         <div className="about-box">
-          <p>
-            L'application repose sur une architecture modulaire avec une
-            séparation claire des responsabilités : couche Domaines pour les
-            entités, Services pour la logique métier, et Contrôleurs pour
-            exposer les endpoints API.
-          </p>
-
-          <p>
-            La base de données PostgreSQL est hébergée via Docker. Les schémas
-            ont été générés automatiquement à partir des entités C# avec Entity
-            Framework. Le versionnement du code a été géré avec Git sur Azure
-            DevOps, avec des commits réguliers et des messages explicites.
-          </p>
+          {[1, 2].map((paragraph) => (
+            <p key={paragraph}>{t(`csharp.architecture${paragraph}`)}</p>
+          ))}
         </div>
       </section>
 
       <section>
-        <h2>Accès au dossier</h2>
-
+        <h2>{t("csharp.accessTitle")}</h2>
         <div className="project-links">
-          
-          <a  href="/projet.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="project-link-button"
+          <a
+            href="/projet.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="project-link-button"
           >
-            Voir le dossier complet
+            {t("csharp.viewDossier")}
           </a>
         </div>
       </section>
