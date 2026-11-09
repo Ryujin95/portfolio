@@ -75,7 +75,14 @@ export default function Navbar() {
             title={language === "fr" ? "Français" : "French"}
             onClick={() => setLanguage("fr")}
           >
-            🇫🇷
+            <span className="language-flag" aria-hidden="true">
+              <svg viewBox="0 0 30 20" focusable="false">
+                <path fill="#002395" d="M0 0h10v20H0z" />
+                <path fill="#fff" d="M10 0h10v20H10z" />
+                <path fill="#ed2939" d="M20 0h10v20H20z" />
+              </svg>
+            </span>
+            <span>FR</span>
           </button>
           <button
             type="button"
@@ -85,7 +92,16 @@ export default function Navbar() {
             title={language === "fr" ? "Anglais" : "English"}
             onClick={() => setLanguage("en")}
           >
-            🇬🇧
+            <span className="language-flag" aria-hidden="true">
+              <svg viewBox="0 0 60 30" focusable="false">
+                <rect width="60" height="30" fill="#012169" />
+                <path d="M0 0 60 30M60 0 0 30" stroke="#fff" strokeWidth="6" />
+                <path d="M0 0 60 30M60 0 0 30" stroke="#c8102e" strokeWidth="2" />
+                <path d="M30 0v30M0 15h60" stroke="#fff" strokeWidth="10" />
+                <path d="M30 0v30M0 15h60" stroke="#c8102e" strokeWidth="6" />
+              </svg>
+            </span>
+            <span>EN</span>
           </button>
         </div>
 
