@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import useLanguage from "../i18n/useLanguage.js";
 import "../css/MiniJeu1.css";
 
 const GAME_DURATION = 60;
@@ -7,10 +8,10 @@ const TARGET_LIFETIME_MS = 1000;
 const TARGET_SIZE = 50;
 const CONTAINER_WIDTH = 1000;
 const CONTAINER_HEIGHT = 500;
-
 const techBadges = ["CSS", "JavaScript", "React"];
 
 export default function MiniJeu1() {
+  const { t } = useLanguage();
   const [score, setScore] = useState(0);
   const [time, setTime] = useState(0);
   const [targets, setTargets] = useState([]);
@@ -25,7 +26,6 @@ export default function MiniJeu1() {
       clearInterval(spawnIntervalRef.current);
       spawnIntervalRef.current = null;
     }
-
     if (gameIntervalRef.current) {
       clearInterval(gameIntervalRef.current);
       gameIntervalRef.current = null;
@@ -40,12 +40,8 @@ export default function MiniJeu1() {
     const id = targetIdRef.current++;
     const top = Math.random() * (CONTAINER_HEIGHT - TARGET_SIZE);
     const left = Math.random() * (CONTAINER_WIDTH - TARGET_SIZE);
-
     setTargets((prev) => [...prev, { id, top, left }]);
-
-    window.setTimeout(() => {
-      removeTarget(id);
-    }, TARGET_LIFETIME_MS);
+    window.setTimeout(() => removeTarget(id), TARGET_LIFETIME_MS);
   };
 
   const stopGame = () => {
@@ -59,11 +55,7 @@ export default function MiniJeu1() {
     setTime(GAME_DURATION);
     setTargets([]);
     setIsRunning(true);
-
-    spawnIntervalRef.current = window.setInterval(() => {
-      spawnTarget();
-    }, SPAWN_EVERY_MS);
-
+    spawnIntervalRef.current = window.setInterval(spawnTarget, SPAWN_EVERY_MS);
     gameIntervalRef.current = window.setInterval(() => {
       setTime((prev) => {
         if (prev <= 1) {
@@ -83,52 +75,41 @@ export default function MiniJeu1() {
     setScore((prev) => prev + 1);
   };
 
-  useEffect(() => {
-    return () => {
-      clearAllIntervals();
-    };
-  }, []);
+  useEffect(() => () => clearAllIntervals(), []);
 
   return (
     <main>
       <section>
-        <h1>FPS</h1>
-
+        <h1>{t("fps.title")}</h1>
         <div className="tech-badges">
-          {techBadges.map((tech) => (
-            <span key={tech} className="badge">{tech}</span>
-          ))}
+          {techBadges.map((tech) => <span key={tech} className="badge">{tech}</span>)}
         </div>
-
-        <p className="intro">
-          Mini-jeu réalisé en JavaScript puis adapté en React pour travailler la
-          logique interactive, la gestion du temps et les événements utilisateur.
-        </p>
+        <p className="intro">{t("fps.intro")}</p>
+        <p className="intro">{t("fps.instructions")}</p>
       </section>
 
       <section>
         <div className="game">
           <div className="game-buttons">
             <button className="start_but" onClick={startGame} type="button">
-              start / restart
+              {t("fps.start")}
             </button>
-
             <button className="stop_but" onClick={stopGame} type="button">
-              stop
+              {t("fps.stop")}
             </button>
           </div>
 
           <div className="game_info">
-            <span className="score">score : {score}</span>
-            <span className="time">temps : {time}</span>
+            <span className="score">{t("fps.score", { score })}</span>
+            <span className="time">{t("fps.time", { seconds: time })}</span>
           </div>
 
           <div className="container">
             {!isRunning && time === 0 && score > 0 ? (
               <div className="end-message">
-                Le jeu est fini
+                {t("fps.finished")}
                 <br />
-                Votre score est de {score}
+                {t("fps.finalScore", { score })}
               </div>
             ) : null}
 
@@ -136,7 +117,7 @@ export default function MiniJeu1() {
               <img
                 key={target.id}
                 src="/silly.jpg"
-                alt="cible"
+                alt={t("fps.targetAlt")}
                 className="target"
                 style={{
                   top: `${target.top}px`,
